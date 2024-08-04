@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Performance Predictor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #d3e5f1; /* Light blue background */
+        }
+        .container {
+            width: 50%;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff; /*White background color */
+        }
+        .form-group {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        .form-group label, .form-group input {
+            width: 45%;
+        }
+        .form-group label {
+            margin-right: 5%;
+        }
+        .form-group input {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-group input[type="radio"], .form-group input[type="checkbox"] {
+            width: auto;
+        }
+        .form-group .checkbox-group {
+            display: flex;
+            align-items: center;
+        }
+        .form-group .checkbox-group label {
+            margin-right: 10px;
+        }
+        .form-group .radio-group {
+            display: flex;
+            align-items: center;
+        }
+        .form-group .radio-group label {
+            margin-right: 10px;
+        }
+        .submit-btn {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .submit-btn input {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+        .submit-btn input:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Predict Student Performance</h1>
+        <form action="/predict" method="post">
+            <div class="form-group">
+                <div class="radio-group">
+                    <label>School:</label>
+                    <input type="radio" id="school_GP" name="school" value="GP">
+                    <label for="school_GP">GP</label>
+                    <input type="radio" id="school_MS" name="school" value="MS">
+                    <label for="school_MS">MS</label>
+                </div>
+                <div class="radio-group">
+                    <label>Sex:</label>
+                    <input type="radio" id="sex_M" name="sex" value="M">
+                    <label for="sex_M">M</label>
+                    <input type="radio" id="sex_F" name="sex" value="F">
+                    <label for="sex_F">F</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="radio-group">
+                    <label>Address:</label>
+                    <input type="radio" id="address_U" name="address" value="U">
+                    <label for="address_U">Urban</label>
+                    <input type="radio" id="address_R" name="address" value="R">
+                    <label for="address_R">Rural</label>
+                </div>
+                <div class="radio-group">
+                    <label>Parent's Cohabitation Status:</label>
+                    <input type="radio" id="Pstatus_T" name="Pstatus" value="T">
+                    <label for="Pstatus_T">T</label>
+                    <input type="radio" id="Pstatus_A" name="Pstatus" value="A">
+                    <label for="Pstatus_A">A</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" min="15" max="22">
+                <label for="famsize">Family Size:</label>
+                <input type="text" id="famsize" name="famsize">
+            </div>
+            <div class="form-group">
+                <label for="Medu">Mother's Education:</label>
+                <input type="number" id="Medu" name="Medu" min="0" max="4">
+                <label for="Fedu">Father's Education:</label>
+                <input type="number" id="Fedu" name="Fedu" min="0" max="4">
+            </div>
+            <div class="form-group">
+                <label for="Mjob">Mother's Job:</label>
+                <input type="text" id="Mjob" name="Mjob">
+                <label for="Fjob">Father's Job:</label>
+                <input type="text" id="Fjob" name="Fjob">
+            </div>
+            <div class="form-group">
+                <label for="reason">Reason for School Choice:</label>
+                <input type="text" id="reason" name="reason">
+                <label for="guardian">Guardian:</label>
+                <input type="text" id="guardian" name="guardian">
+            </div>
+            <div class="form-group">
+                <label for="traveltime">Travel Time:</label>
+                <input type="number" id="traveltime" name="traveltime" min="1" max="4">
+                <label for="studytime">Study Time:</label>
+                <input type="number" id="studytime" name="studytime" min="1" max="4">
+            </div>
+            <div class="form-group">
+                <label for="failures">Failures:</label>
+                <input type="number" id="failures" name="failures" min="0" max="4">
+                <label for="famrel">Family Relationships:</label>
+                <input type="number" id="famrel" name="famrel" min="1" max="5">
+            </div>
+            <div class="form-group">
+                <label for="freetime">Free Time after School:</label>
+                <input type="number" id="freetime" name="freetime" min="1" max="5">
+                <label for="goout">Going Out with Friends:</label>
+                <input type="number" id="goout" name="goout" min="1" max="5">
+            </div>
+            <div class="form-group">
+                <label for="Dalc">Workday Alcohol Consumption:</label>
+                <input type="number" id="Dalc" name="Dalc" min="1" max="5">
+                <label for="Walc">Weekend Alcohol Consumption:</label>
+                <input type="number" id="Walc" name="Walc" min="1" max="5">
+            </div>
+            <div class="form-group">
+                <label for="health">Current Health Status:</label>
+                <input type="number" id="health" name="health" min="1" max="5">
+                <label for="absences">Number of School Absences:</label>
+                <input type="number" id="absences" name="absences" min="0">
+            </div>
+            <div class="form-group">
+                <label for="G1">First Period Grade:</label>
+                <input type="number" id="G1" name="G1" min="0" max="20" required><br>
+                <label for="G2">Second Period Grade:</label>
+                <input type="number" id="G2" name="G2" min="0" max="20" required><br>
+            </div>
+            <div class="form-group">
+                <label>Extra Educational Support:</label>
+                <div class="radio-group">
+                    <input type="radio" id="schoolsup_yes" name="schoolsup" value="yes">
+                    <label for="schoolsup_yes">Yes</label>
+                    <input type="radio" id="schoolsup_no" name="schoolsup" value="no">
+                    <label for="schoolsup_no">No</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Family Educational Support:</label>
+                <div class="radio-group">
+                    <input type="radio" id="famsup_yes" name="famsup" value="yes">
+                    <label for="famsup_yes">Yes</label>
+                    <input type="radio" id="famsup_no" name="famsup" value="no">
+                    <label for="famsup_no">No</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Extra Paid Classes:</label>
+                <div class="radio-group">
+                    <input type="radio" id="paid_yes" name="paid" value="yes">
+                    <label for="paid_yes">Yes</label>
+                    <input type="radio" id="paid_no" name="paid" value="no">
+                    <label for="paid_no">No</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Extra-curricular Activities:</label>
+                <div class="radio-group">
+                    <input type="radio" id="activities_yes" name="activities" value="yes">
+                    <label for="activities_yes">Yes</label>
+                    <input type="radio" id="activities_no" name="activities" value="no">
+                    <label for="activities_no">No</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Attended Nursery School:</label>
+                <div class="radio-group">
+                    <input type="radio" id="nursery_yes" name="nursery" value="yes">
+                    <label for="nursery_yes">Yes</label>
+                    <input type="radio" id="nursery_no" name="nursery" value="no">
+                    <label for="nursery_no">No</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Wants Higher Education:</label>
+                <div class="radio-group">
+                    <input type="radio" id="higher_yes" name="higher" value="yes">
+                    <label for="higher_yes">Yes</label>
+                    <input type="radio" id="higher_no" name="higher" value="no">
+                    <label for="higher_no">No</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Internet Access:</label>
+                <div class="radio-group">
+                    <input type="radio" id="internet_yes" name="internet" value="yes">
+                    <label for="internet_yes">Yes</label>
+                    <input type="radio" id="internet_no" name="internet" value="no">
+                    <label for="internet_no">No</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Romantic Relationship:</label>
+                <div class="radio-group">
+                    <input type="radio" id="romantic_yes" name="romantic" value="yes">
+                    <label for="romantic_yes">Yes</label>
+                    <input type="radio" id="romantic_no" name="romantic" value="no">
+                    <label for="romantic_no">No</label>
+                </div>
+            </div>
+            <div class="submit-btn">
+                <input type="submit" value="Predict">
+            </div>
+        </form>
+        {% if prediction_text %}
+            <div class="result">
+                <h2>{{ prediction_text }}</h2>
+                {% if improvement_message %}
+                    <h3>{{ improvement_message }}</h3>
+                {% endif %}
+                {% if motivational_quote %}
+                    <blockquote>{{ motivational_quote }}</blockquote>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
